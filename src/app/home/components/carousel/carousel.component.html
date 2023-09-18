@@ -1,0 +1,10 @@
+<h2>Bem vindo!</h2>
+  <owl-carousel-o [options]="customOptions" class="carouseol-container">
+      <ng-container *ngFor="let slide of slidesStore">
+          <ng-template carouselSlide [id]="slide.id">
+            <img [src]="slide.src" [alt]="slide.src" [title]="slide.src">
+            <span>{{slide.text}}</span>
+          </ng-template>
+        </ng-container>
+  </owl-carousel-o>
+<!-- <span> Organize o seu dia com o Tudu</span> -->

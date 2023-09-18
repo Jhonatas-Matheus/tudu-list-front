@@ -1,0 +1,76 @@
+<div class="form">
+  <input type="text" class="input input-title" placeholder="Digite o título" [formControl]="title"/>
+  <input
+    type="text"
+    class="input input-description"
+    placeholder="Adicione uma descrição (opcional)"
+    [formControl]="description"
+  />
+  <div class="input-container">
+    <mat-icon>calendar_today</mat-icon>
+    <input class="input" type="date"  [formControl]="deadline"/>
+  </div>
+  <div class="input-container categories">
+    <mat-icon> local_offer</mat-icon>
+    <ul class="categories-container">
+    <ng-container *ngFor="let category of categories">
+        <li>
+          <span>{{category}}</span>
+          <button (click)="removeCategory(category)">X</button>
+        </li>
+      </ng-container>
+    </ul>
+    <input
+    *ngIf="categories.length < 3"
+      type="text"
+      class="input input-description"
+      placeholder="Inserir Categoria"
+      [formControl]="category"
+      (keyup.enter)="addCategory()"
+    />
+  </div>
+  <div class="input-container members">
+    <mat-icon class="material-icons-outlined">supervised_user_circle</mat-icon>
+    <ul class="members-container">
+      <ng-container *ngFor="let member of members">
+        <li>
+          <span (click)="removeMember(member)">{{member.first_name[0] | uppercase}} {{member.last_name[0] | uppercase}}</span>
+        </li>
+      </ng-container>
+    </ul>
+    <input
+      type="text"
+      class="input input-description"
+      placeholder="Adcionar membros"
+      [formControl]="member"
+      (keyup.enter)="addMember()"
+
+    />
+  </div>
+  <div class="input-container">
+    <mat-icon> attach_file</mat-icon>
+    <input
+      type="file"
+      class="input input-description"
+      placeholder="Adcionar anexos"
+    />
+  </div>
+  <hr />
+  <ul class="subtask-container">
+    <ng-container *ngFor="let task of subtasks; let i = index">
+      <li>
+        <div class="check-box"></div>
+        <input *ngIf="i !== subtasks.length" class="input input-subtask" type="text" value={{task.title}} readonly/>
+        <button>X</button>
+      </li>
+    </ng-container>
+    <input class="input input-subtask" type="text" [formControl]="subtask" placeholder="Insira a nova subtask"/>
+    <button class="btn-add-task" (click)="addSubtask()">
+        <mat-icon>subdirectory_arrow_right</mat-icon>
+        <span>Adcionar Sub-task</span>
+    </button>
+  </ul>
+  <div class="btn-container-create-task">
+    <button (click)="createTask()">Criar Task</button>
+  </div>
+</div>

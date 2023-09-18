@@ -1,0 +1,114 @@
+<div class="form-login" [ngClass]="showForm ? 'form--show' : 'form--hidden'">
+  <div class="form-header">
+    <button (click)="handleShowForm()" class="arrow-btn">
+      <mat-icon
+        class="material-icons-outlined"
+        aria-hidden="false"
+        aria-label="Arrow Icon"
+        fontIcon="arrow_upward"
+      ></mat-icon>
+    </button>
+  </div>
+  <div class="form-content">
+    <div class="form-content-login" *ngIf="isLogin() && showForm" @fadeIn @fadeOut>
+      <h2>Entrar</h2>
+      <mat-form-field>
+        <mat-label>Enter your email</mat-label>
+        <input
+          matInput
+          placeholder="pat@example.com"
+          [formControl]="email"
+          required
+        />
+        <mat-error *ngIf="email.invalid">{{ getErrorMessage() }}</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Enter your password</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" [formControl]="password"/>
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="hide = !hide"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide"
+        >
+          <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
+      </mat-form-field>
+      <button class="btn-login" (click)="handleTypeForm()">
+        <div class="custom-loader" *ngIf="loading"></div>
+        <span *ngIf="!loading">Entrar</span>  
+      </button>
+      <!-- <button class="btn-login">Logar com Google</button> -->
+      <span class="btn-not-account" (click)="setTypeForm('register')"
+        >Não tenho conta</span
+      >
+    </div>
+    <div class="form-content-register" *ngIf="isRegister() && showForm" @fadeIn @fadeOut>
+      <h2>Cadastrar</h2>
+      <div class="input-name-container">
+        <mat-form-field>
+          <mat-label>Nome</mat-label>
+          <input
+            matInput
+            placeholder="John"
+            [formControl]="firstName"
+            required
+          />
+          <mat-error *ngIf="email.invalid">{{ getErrorMessage() }}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Sobrenome</mat-label>
+          <input
+            matInput
+            placeholder="Doe"
+            [formControl]="lastName"
+            required
+          />
+          <mat-error *ngIf="email.invalid">{{ getErrorMessage() }}</mat-error>
+        </mat-form-field>
+      </div>
+      <mat-form-field>
+        <mat-label>E-mail</mat-label>
+        <input
+          matInput
+          placeholder="johndoe@mail.com"
+          [formControl]="email"
+          required
+        />
+        <mat-error *ngIf="email.invalid">{{ getErrorMessage() }}</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Senha</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" [formControl] = "password"/>
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="hide = !hide"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide"
+        >
+          <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Repetir senha</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" [formControl] = "confirmPassword"/>
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="hide = !hide"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide"
+        >
+          <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
+      </mat-form-field>
+      <button class="btn-login" (click)="handleTypeForm()">Cadastrar</button>
+      <!-- <button class="btn-login">Cadastrar com Google</button> -->
+      <span class="btn-not-account" (click)="setTypeForm('login')"
+        >Já tenho conta</span
+      >
+    </div>
+  </div>
+</div>

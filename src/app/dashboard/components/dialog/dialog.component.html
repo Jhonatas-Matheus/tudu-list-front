@@ -1,0 +1,11 @@
+<div mat-dialog-content>
+  <p>Digite o email do usuário que deseja adicionar</p>
+  <mat-form-field>
+    <mat-label>Email do usuário</mat-label>
+    <input matInput [(ngModel)]="data">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+</div>

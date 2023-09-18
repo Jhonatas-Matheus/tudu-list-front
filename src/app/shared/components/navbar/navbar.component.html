@@ -1,0 +1,32 @@
+<!-- <nav *ngIf="notHomePage()"> -->
+  <nav *ngIf="!verifyCurrentRoute()">
+  <ul>
+    <li class="icon-display" (click)="closeAllModals()">
+      <mat-icon
+        class="material-icons-outlined"
+        aria-hidden="false"
+        aria-label="Home icon"
+        fontIcon="home"
+      ></mat-icon>
+    </li>
+    <li class="icon-display" (click)="handleOpenModalCalendar()">
+      <mat-icon
+        class="material-icons-outlined"
+        aria-hidden="false"
+        aria-label="Calender Icon"
+        fontIcon="calendar_month"
+      ></mat-icon>
+    </li>
+    <li class="icon-display">
+        <mat-icon
+          class="material-icons-outlined"
+          aria-hidden="false"
+          aria-label="Calender Icon"
+          fontIcon="person"
+        ></mat-icon>
+      </li>
+      <li class="plus-btn" (click)="handleOpenModalCreateTask()">
+        <span>+</span>
+      </li>
+  </ul>
+</nav>

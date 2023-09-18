@@ -1,0 +1,18 @@
+:host{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: .5s;
+    bottom: 0;
+    // bottom: -100%;
+    left: 0;
+    z-index: 5;
+    background-color: #dfdfe0;
+    color: #686d72;
+    position: absolute;
+    padding: 2rem;
+}
+.calendar{
+    width: 100%;
+    max-height: 50%;
+}

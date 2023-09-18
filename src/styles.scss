@@ -1,1 +1,64 @@
 /* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined");
+@import 'ngx-owl-carousel-o/lib/styles/scss/owl.carousel';
+@import 'ngx-owl-carousel-o/lib/styles/scss/owl.theme.default';
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap');
+:root{
+    --primary-color: #1A55B4;
+    --secundary-color: #6AA5FF;
+    --secundary-color-danger: #FE746F;
+    --secundary-color-warning: #FEC857;
+    --secundary-color-acient: #FEC857;
+    --text-color: #869791;
+    --white: #FFFFFF;
+    --fc-daygrid-event-dot-width: 5px;
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    // overflow-x: hidden;
+}
+.fc{
+    & .fc-button{
+        
+    }
+    & .fc-today-button{
+        display: none;
+    }
+    & .fc-toolbar-title{
+        font-size: 1.5rem;
+        color: var(--primary-color);
+    }
+    & .fc-next-button, .fc-prev-button{
+        background-color: transparent;
+        border: none;
+        color: var(--primary-color);
+        &:hover{
+            background-color: transparent;
+            border: none;
+            outline: none;
+        }
+        &:active{
+            background-color: transparent;
+            border: none;
+            outline: none;
+
+        }
+    }
+}
+.fc-daygrid-block-event {
+
+    & .fc-event-time {
+        font-size: 3rem;
+      font-weight: bold;
+    }
+  
+    & .fc-event-time,
+    & .fc-event-title {
+      padding: 1px;
+    }
+  
+  }
+html, body { height: 100%; }
+body { margin: 0; font-family: 'Open Sans', sans-serif; }

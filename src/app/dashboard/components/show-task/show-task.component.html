@@ -1,0 +1,139 @@
+<div class="display-container">
+  <nav>
+    <mat-icon (click)="handleCloseModalSpecificTask()"
+      >keyboard_backspace</mat-icon
+    >
+    <div>
+      <button class="more-options-btn" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>more_horiz</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item [disabled]="!displayOwnerComands()" (click)="changeTaskMode()">
+          <mat-icon>edit</mat-icon>
+          <span>{{handleTaskMode()? 'Editar Tarefa' : 'Visualizar Tarefa'}}</span>
+        </button>
+        <button *ngIf="!handleTaskMode()" mat-menu-item (click)="confirmUpdate()" [disabled]="!displayOwnerComands()">
+          <mat-icon>check</mat-icon>
+          <span>Confirmar mudanças</span>
+        </button>
+        <button mat-menu-item (click)="handleDeleteTask()" [disabled]="!displayOwnerComands()">
+          <mat-icon>cancel</mat-icon>
+          <span>Excluir Tarefa</span>
+        </button>
+      </mat-menu>
+    </div>
+  </nav>
+  <div class="loader-container" *ngIf="loader">
+    <div class="custom-loader"></div>
+  </div>
+  <ng-container *ngIf="!loader">
+    <input
+      class="task-title"
+      [ngClass]="handleTaskTitle(currentTask.priority)"
+      type="text"
+      [formControl]="titleInput"
+      [readOnly]="handleTaskMode()"
+      (blur)="updateCurrrentTask('title',titleInput.value)"
+    />
+    <input
+      class="task-description"
+      type="text"
+      [formControl]="descriptionInput"
+      [readOnly]="handleTaskMode()"
+      (blur)="updateCurrrentTask('description',descriptionInput.value)"
+    />
+    <div class="input-container">
+      <mat-icon>calendar_today</mat-icon>
+      <input 
+      type="date" 
+      [formControl]="deadlineInput" 
+      [readOnly]="handleTaskMode()" 
+      (blur)="updateCurrrentTask('deadline',deadlineInput.value)"
+    />
+    </div>
+    <div class="input-container">
+      <mat-icon class="category-icon"> local_offer</mat-icon>
+      <ng-container *ngFor="let category of currentTask.categories">
+        <span
+          class="category-badge"
+          [ngClass]="[handleColorBadgeCategory(currentTask.priority)]"
+          >{{ category }}</span
+        >
+      </ng-container>
+    </div>
+    <div class="members-initials-container">
+      <ng-container *ngFor="let user of currentTask.members; let i = index">
+        <span
+          class="members-initials"
+          [ngClass]="[handleColorBadgeCategory(currentTask.priority)]"
+          [matTooltip]="user.email"
+          #tooltip="matTooltip"
+          (click)="tooltip.show()"
+        >
+          {{ user.first_name[0] | uppercase }}{{ user.last_name[0] | uppercase }}
+        </span>
+        <span
+        (click)="openDialog()"
+        *ngIf="i === currentTask.members.length -1 && !handleTaskMode()"
+          class="members-initials btn-add-member"
+        >
+        +
+      </span>
+      </ng-container>
+    </div>
+    <div class="input-container">
+      <mat-icon> attach_file</mat-icon>
+      <input type="file">
+    </div>
+    <hr>
+    <ul class="subtasks-container">
+      <ng-container *ngFor="let subtask of currentTask.subtasks; let i = index">
+        <li>
+          <div class="check-box" (click)="handleSubTaskToDone(subtask.subtask_id)">
+            <mat-icon *ngIf="subtask.status === 1" class="check">check</mat-icon>
+          </div>
+          <input *ngIf="i !== currentTask.subtasks.length" class="input input-subtask" type="text" value={{subtask.title}} readonly/>
+        </li>
+      </ng-container>
+    </ul>
+  <ng-container *ngIf="!handleTaskMode()">
+    <input class="input input-subtask" type="text" [formControl]="subtask" placeholder="Insira a nova subtask"/>
+    <button class="btn-add-task" (click)="addSubtask()">
+        <mat-icon>subdirectory_arrow_right</mat-icon>
+        <span>Adcionar Sub-task</span>
+    </button>
+  </ng-container>
+    <hr>
+    <p><span *ngIf="loader">O seu comentário está sendo processado</span></p>
+    <input 
+    class="comment-task-input" 
+    [ngClass]="loader? 'input-disable': ''"
+    placeholder="Adicionar comentário" 
+    type="text"
+    [formControl]="comment"
+    (keyup.enter)="makeComment()"
+    [readOnly]="loader"
+    >
+    <ul *ngIf="currentTask.comments.length > 0" class="comment-list">
+      <ng-container *ngFor="let comment of currentTask?.comments">
+        <li class="comment-container">
+          <span
+          class="members-initials members-initials-comment"
+          [ngClass]="[handleColorBadgeCategory(currentTask.priority)]"
+        >
+          {{ comment.user.first_name[0] | uppercase }}{{ comment.user.last_name[0] | uppercase }}
+        </span>
+          <div class="user-info-container">
+            <div class="row-one">
+              <span class="user-info--name">{{comment.user.first_name}} {{comment.user.last_name}}</span>
+              <span class="comment-date">{{handleDataCreatedComment(comment.created_at)}}</span>
+            </div>
+            <div class="row-two">
+              <span class="comment-content">{{comment.content}}</span>
+            </div>
+          </div>
+        </li>
+      </ng-container>
+    </ul>
+  </ng-container>
+</div>

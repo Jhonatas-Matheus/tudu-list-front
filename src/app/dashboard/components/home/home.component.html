@@ -1,0 +1,62 @@
+<header><h1>{{sectionViewTitle}}</h1></header>
+<!-- <button class="refresh-btn" (click)="handleRefresh()">
+  <mat-icon>refresh</mat-icon>
+</button> -->
+<!-- <button class="exit-btn" (click)="handleLogout()">
+  <mat-icon>exit_to_app</mat-icon>
+</button> -->
+
+<section class="todo">
+  <h2>A FAZER</h2>
+  <ul class="task-list">
+    <ng-container *ngFor="let task of listOfTasks">
+      <li *ngIf="!handleTaskDone(task.status)" [ngClass]="[handleTaskPriority(task.priority)]">
+        <div class="check-box"  (click)="changeTaskToDone(task)">
+            <div class="mark" *ngIf="task.status === 1"> X </div>
+        </div>
+        <div class="content" (click)="handleOpenModalSpecificTask(task)">
+            <p>{{ task.title }}</p>
+            <span>{{ task.description }}</span>
+        </div>
+      </li>
+    </ng-container>
+  </ul>
+</section>
+<section class="in-progress">
+  <h2>EM PROGRESSO</h2>
+  <ul>
+    <ng-container *ngFor="let task of listOfTasks">
+        <li *ngIf="task.subtasks.length > 0 && task.status !==1" [ngClass]="handleTaskPriority(task.priority)" (click)="handleOpenModalSpecificTask(task)">
+          <p>{{ handleTaskTitle(task.title)}}</p>
+          <span>{{ task.description }}</span>
+          <span>{{handleTaskProgress(task.subtasks) | percent}} </span>
+          <span class="progress-bar">
+            <span class="progress-bar-fill" [ngStyle]="{'width':handleTaskProgress(task.subtasks) * 100 + '%'}"></span>
+          </span>
+        </li>
+      </ng-container>
+  </ul>
+</section>
+
+<section class="done">
+  <h2>CONCLUÍDO</h2>
+  <ul class="task-list">
+    <ng-container *ngFor="let task of listOfTasks">
+        <li *ngIf="handleTaskDone(task.status)">
+          <div class="check-box" (click)="changeTaskToDone(task)">
+              <mat-icon *ngIf="task.status === 1" class="check">check</mat-icon>
+          </div>
+          <div class="content" (click)="handleOpenModalSpecificTask(task)">
+              <p>{{ task.title }}</p>
+              <span>{{ task.description }}</span>
+          </div>
+        </li>
+      </ng-container>
+  </ul>
+</section>
+<app-create-task-form [ngClass]="handleModalCreateTask()"></app-create-task-form>
+<app-show-task *ngIf="showSpecificTaskLifeCycle" @open @close [ngClass]="bgTaskSpecifci"></app-show-task>
+<app-calender  *ngIf="showCalendarLifeCycle" @open @close></app-calender>
+<div class="loader-container" *ngIf="loader">
+  <div class="custom-loader"></div>
+</div>
